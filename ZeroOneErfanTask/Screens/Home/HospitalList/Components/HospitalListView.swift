@@ -15,6 +15,7 @@ struct HospitalListView: View {
     @Binding var selected: HospitalListSegment
     var loading: Bool
     var hospitals: [HospitalUIItem]
+    var selectedItem: HospitalUIItem?
     var offset: CGFloat
     var onItemTapped: ((HospitalUIItem) -> Void)
     @Environment(\.safeAreaInsets) private var insets
@@ -48,6 +49,7 @@ struct HospitalListView: View {
                     HStack {
                         Spacer()
                         ProgressView()
+                            .tint(.white)
                             .padding()
                         Spacer()
                     }
@@ -61,7 +63,7 @@ struct HospitalListView: View {
                         ScrollView {
                             LazyVStack(spacing: defaultVPadding){
                                 ForEach(hospitals) { item in
-                                    HospitalRow(hospital: item)
+                                    HospitalRow(hospital: item, isSelected: selectedItem == nil ? nil : selectedItem!.id == item.id)
                                         .onTapGesture {
                                             onItemTapped(item)
                                         }

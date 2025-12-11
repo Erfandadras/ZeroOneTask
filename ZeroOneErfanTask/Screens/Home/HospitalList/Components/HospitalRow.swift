@@ -39,7 +39,7 @@ struct HospitalRow: View {
                         }
                         
                         VStack(spacing: 4) {
-                            Text("21 min")
+                            Text(hospital.waitingTimeStr)
                                 .font(.ui.smSemiBold)
                             Text("Waiting Time")
                                 .font(.ui.sRegular)

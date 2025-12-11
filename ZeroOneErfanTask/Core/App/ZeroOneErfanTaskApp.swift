@@ -18,6 +18,7 @@ struct ZeroOneErfanTaskApp: App {
             NavigationStack {
                 MapScreenView()
             }
+            .preferredColorScheme(.light)
             .environment(\.colorScheme, .light)
         }
     }

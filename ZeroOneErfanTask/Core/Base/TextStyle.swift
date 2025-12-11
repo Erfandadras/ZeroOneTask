@@ -14,6 +14,10 @@ extension LocalTextStyle {
     
     /// smal semi bold 12
     public static let sSemiBold = Font.Poppins.semiBold(12.updateForHeight())
+
+    
+    /// xsmal regular 10
+    public static let xsRegular = Font.Poppins.regular(12.updateForHeight())
     
     /// smal regular 12
     public static let sRegular = Font.Poppins.regular(12.updateForHeight())

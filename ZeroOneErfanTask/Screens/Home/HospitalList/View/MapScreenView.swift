@@ -13,13 +13,13 @@ struct MapScreenView: View {
     // MARK: - Properties
     @State private var viewModel: MapScreenVM
     @State private var cameraPosition: MapCameraPosition
-    @State private var selectedHospital: HospitalUIItem?
     @State private var offset: CGFloat = K.size.portrait.width
     @State private var dragOffset: CGFloat = 0
     @Namespace var namespace
     
     let centerCoordinate: CLLocationCoordinate2D
     let searchRadius: CLLocationDistance = 20000 // 20km
+    @State private var selectedHospital: HospitalUIItem?
     
     // MARK: - Offset Stages
     private var offsetStages: [CGFloat] {
@@ -75,22 +75,41 @@ struct MapScreenView: View {
                             Button(action: {
                                 selectedHospital = hospital
                             }) {
-                                VStack(spacing: 4) {
-                                    Image(systemName: "cross.circle.fill")
-                                        .font(.title)
-                                        .foregroundColor(hospital.availability ? .red : .gray)
-                                        .background(
-                                            Circle()
-                                                .fill(Color.white)
-                                                .frame(width: 32, height: 32)
-                                        )
-                                    if selectedHospital?.id == hospital.id {
-                                        Text(hospital.name)
-                                            .font(.caption)
-                                            .padding(4)
-                                            .background(Color.white)
-                                            .cornerRadius(4)
-                                            .shadow(radius: 2)
+                                let selected = selectedHospital?.id == hospital.id
+                                VStack(alignment: .leading, spacing: 4) {
+                                    HStack {
+                                        Text("H")
+                                            .font(Font.Poppins.semiBold(24))
+                                            .foregroundStyle(.ui.white)
+                                            .frame(width: 32)
+                                            .background(hospital.availability ? .gray : .red)
+                                            .clipShape(.circle)
+                                    }
+                                    
+                                    if selected {
+                                        HStack(spacing: 0){
+                                            VStack(spacing: 2) {
+                                                Text(hospital.distanceInKm)
+                                                    .font(.ui.xsRegular)
+                                                Text("KM")
+                                                    .font(.ui.xsRegular)
+                                            }
+                                            .foregroundStyle(.red)
+                                            .padding(.horizontal, 8)
+                                            
+                                            VStack(spacing: 2) {
+                                                Text(hospital.waitingTimeStr)
+                                                    .font(.ui.xsRegular)
+                                                Text("Waiting Time")
+                                                    .font(Font.Poppins.regular(8))
+                                            }
+                                            .foregroundStyle(.white)
+                                            .padding(.horizontal, 8)
+                                            .padding(.vertical, 4)
+                                            .background(.red)
+                                        }
+                                        .background(.white)
+                                        .cornerRadius(12)
                                     }
                                 }
                             }
@@ -108,21 +127,13 @@ struct MapScreenView: View {
                 Spacer()
             }
             // Hospital List Section
-            HospitalListView(selected: .constant(.early),
+            HospitalListView(selected: $viewModel.selectedSegment,
                              loading: viewModel.isLoading,
-                             hospitals: viewModel.hospitalUIItems,
+                             hospitals: viewModel.sortedHospitals,
+                             selectedItem: selectedHospital,
                              offset: offset) { hospital in
+                // Show detail immediately (fast presentation)
                 selectedHospital = hospital
-                // Animate camera to hospital location
-                withAnimation {
-                    cameraPosition = .region(
-                        MKCoordinateRegion(
-                            center: hospital.coordinate,
-                            latitudinalMeters: 2000,
-                            longitudinalMeters: 2000
-                        )
-                    )
-                }
             }
             .offset(y: offset + dragOffset)
             .gesture(
@@ -165,6 +176,18 @@ struct MapScreenView: View {
                                             near: centerCoordinate,
                                             radius: searchRadius)
         }
+        .onChange(of: selectedHospital, { _, hospital in
+            // Animate camera to hospital location
+            withAnimation {
+                cameraPosition = .region(
+                    MKCoordinateRegion(
+                        center: hospital?.coordinate ?? centerCoordinate,
+                        latitudinalMeters: hospital != nil ? 2000 : 40000,
+                        longitudinalMeters: hospital != nil ? 2000 : 40000
+                    )
+                )
+            }
+        })
         .onChange(of: viewModel.searchText) { oldValue, newValue in
             if newValue.isEmpty {
                 viewModel.searchHospitals(near: centerCoordinate, radius: searchRadius)
@@ -174,6 +197,13 @@ struct MapScreenView: View {
             // Load hospitals when view appears
             viewModel.searchHospitals(near: centerCoordinate, radius: searchRadius)
         }
+        .sheet(item: $selectedHospital) { hospital in
+            HospitalDetailView(
+                hospital: hospital,
+                viewModel: viewModel,
+                originCoordinate: centerCoordinate
+            )
+        }
     }
     
     // MARK: - Helper Methods
@@ -181,8 +211,4 @@ struct MapScreenView: View {
         // Find the stage with minimum distance to current position
         offsetStages.min(by: { abs($0 - position) < abs($1 - position) }) ?? offsetStages[1]
     }
-}
-
-#Preview {
-    MapScreenView()
 }

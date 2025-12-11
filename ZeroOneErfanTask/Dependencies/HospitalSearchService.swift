@@ -32,8 +32,8 @@ final class MapKitHospitalSearchService: HospitalSearchServiceProtocol {
         request.naturalLanguageQuery = "hospital"
         request.region = MKCoordinateRegion(
             center: coordinate,
-            latitudinalMeters: radius * 2,
-            longitudinalMeters: radius * 2
+            latitudinalMeters: radius,
+            longitudinalMeters: radius
         )
         request.resultTypes = [.pointOfInterest, .address]
         return try await performSearch(request: request,
@@ -50,8 +50,8 @@ final class MapKitHospitalSearchService: HospitalSearchServiceProtocol {
         request.naturalLanguageQuery = query.isEmpty ? "hospital" : "\(query) hospital"
         request.region = MKCoordinateRegion(
             center: coordinate,
-            latitudinalMeters: radius * 2,
-            longitudinalMeters: radius * 2
+            latitudinalMeters: radius,
+            longitudinalMeters: radius
         )
         request.resultTypes = .pointOfInterest
         
@@ -73,16 +73,15 @@ final class MapKitHospitalSearchService: HospitalSearchServiceProtocol {
         )
         
         // First, create basic hospital objects
-        var hospitals = response.mapItems
+        return response.mapItems
             .compactMap { mapItem -> Hospital? in
                 guard let location = mapItem.placemark.location else { return nil }
                 
                 let distance = centerLocation.distance(from: location)
-                print(location.coordinate, request.region)
-                
+                if distance > radius { return nil }
                 // Generate mock data
                 let availability = Double.random(in: 0...1) > 0.2
-                let waitingTime = availability ? Int.random(in: 5...120) : nil
+                let waitingTime = availability ? Int.random(in: 5...1200) : nil // in seconds
                 let rating = Double.random(in: 1.0...5.0)
                 let latestUpdate = Calendar.current.date(byAdding: .hour, value: -Int.random(in: 1...24), to: Date())
                 
@@ -102,7 +101,6 @@ final class MapKitHospitalSearchService: HospitalSearchServiceProtocol {
                 )
             }
             .sorted { $0.distance < $1.distance }
-        return hospitals
     }
     
     private func formatAddress(from placemark: MKPlacemark) -> String {
