@@ -1,0 +1,15 @@
+{
+  "originHash" : "18967d288a821948ae098f67ecd5b6b0a8ff9a158e0a1892f960e8d06647508b",
+  "pins" : [
+    {
+      "identity" : "base_module",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Erfandadras/base_module",
+      "state" : {
+        "branch" : "master",
+        "revision" : "cbffe03b9cd421d9ee71bd582d8fc8deafee7aaa"
+      }
+    }
+  ],
+  "version" : 3
+}
