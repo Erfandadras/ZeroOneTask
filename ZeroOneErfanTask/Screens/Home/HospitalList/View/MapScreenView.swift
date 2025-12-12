@@ -61,28 +61,28 @@ struct MapScreenView: View {
                     Annotation("Center", coordinate: centerCoordinate) {
                         ZStack {
                             Circle()
-                                .fill(Color.blue.opacity(0.3))
+                                .fill(.ui.blue.opacity(0.3))
                                 .frame(width: 20, height: 20)
                             Circle()
-                                .fill(Color.blue)
+                                .fill(.ui.blue)
                                 .frame(width: 10, height: 10)
                         }
                     }
                     
                     // Hospital markers
                     ForEach(viewModel.hospitalUIItems) { hospital in
+                        let selected = selectedHospital?.id == hospital.id
                         Annotation(hospital.name, coordinate: hospital.coordinate) {
                             Button(action: {
                                 selectedHospital = hospital
                             }) {
-                                let selected = selectedHospital?.id == hospital.id
                                 VStack(alignment: .leading, spacing: 4) {
                                     HStack {
                                         Text("H")
                                             .font(Font.Poppins.semiBold(24))
                                             .foregroundStyle(.ui.white)
                                             .frame(width: 32)
-                                            .background(hospital.availability ? .gray : .red)
+                                            .background(hospital.availability ? .ui.red : .ui.gray)
                                             .clipShape(.circle)
                                     }
                                     
@@ -94,7 +94,7 @@ struct MapScreenView: View {
                                                 Text("KM")
                                                     .font(.ui.xsRegular)
                                             }
-                                            .foregroundStyle(.red)
+                                            .foregroundStyle(.ui.red)
                                             .padding(.horizontal, 8)
                                             
                                             VStack(spacing: 2) {
@@ -103,23 +103,23 @@ struct MapScreenView: View {
                                                 Text("Waiting Time")
                                                     .font(Font.Poppins.regular(8))
                                             }
-                                            .foregroundStyle(.white)
+                                            .foregroundStyle(.ui.white)
                                             .padding(.horizontal, 8)
                                             .padding(.vertical, 4)
-                                            .background(.red)
+                                            .background(.ui.red)
                                         }
-                                        .background(.white)
+                                        .background(.ui.white)
                                         .cornerRadius(12)
                                     }
                                 }
-                            }
+                            }.zIndex(selected ? 1000 : 1)
                         }
                     }
                     
                     // 20km radius circle
                     MapCircle(center: centerCoordinate, radius: searchRadius)
-                        .foregroundStyle(Color.blue.opacity(0.1))
-                        .stroke(Color.blue, lineWidth: 2)
+                        .foregroundStyle(.ui.blue.opacity(0.1))
+                        .stroke(.ui.blue, lineWidth: 2)
                 }
                     .cornerRadius(20, corners: .allCorners)
                     .frame(height: K.size.portrait.width, alignment: .center)

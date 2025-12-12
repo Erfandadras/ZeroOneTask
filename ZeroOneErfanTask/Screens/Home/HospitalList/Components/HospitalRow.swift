@@ -14,7 +14,7 @@ struct HospitalRow: View {
     var isSelected: Bool?
     
     var body: some View {
-        let notSelected = isSelected == false
+        let notSelected = hospital.availability ? isSelected == false : true
         
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 20){
@@ -22,7 +22,7 @@ struct HospitalRow: View {
                     .font(Font.Poppins.semiBold(32))
                     .foregroundStyle(.ui.white)
                     .frame(width: 48)
-                    .background(notSelected ? .gray : .red)
+                    .background(notSelected ? .ui.gray : .ui.red)
                     .clipShape(.circle)
                 
                 VStack(alignment: .leading, spacing: 8) {
@@ -46,7 +46,7 @@ struct HospitalRow: View {
                         }
                     }
                 }
-                .foregroundStyle(notSelected ? .black.opacity(0.4) : .red)
+                .foregroundStyle(notSelected ? .ui.black.opacity(0.4) : .ui.red)
                 
                 Spacer()
             }
@@ -54,9 +54,9 @@ struct HospitalRow: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .background(isSelected == nil
-                    ? .white
-                    : isSelected! ? .white : .white.opacity(0.15))
+                    ? .ui.white
+                    : isSelected! ? .ui.white : .ui.white.opacity(0.15))
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+        .shadow(color: .ui.black.opacity(0.1), radius: 4, x: 0, y: 2)
     }
 }

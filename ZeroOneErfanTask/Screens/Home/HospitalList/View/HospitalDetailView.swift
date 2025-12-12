@@ -19,6 +19,8 @@ struct HospitalDetailView: View {
     @State private var isFetchingData: Bool = false
     @Environment(\.safeAreaInsets) private var insets
     @State private var maxHeight: CGFloat = 50
+    @State private var presentedDirectionType: Bool = false
+    @State private var transportTypes: TransportType?
     
     // Use updated hospital if available, otherwise use original
     private var displayHospital: HospitalUIItem {
@@ -36,35 +38,35 @@ struct HospitalDetailView: View {
                             Text("Multi-Speciality")
                                 .font(.ui.sSemiBold)
                         }
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(.ui.blue)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 4)
-                        .background(.blue.opacity(0.2))
+                        .background(.ui.blue.opacity(0.2))
                         .cornerRadius(8, corners: .allCorners)
                         
                         Spacer()
                         
                         Text(displayHospital.lastUpdatedText)
                             .font(.ui.sRegular)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(.ui.textSecondary)
                     }
                     // second row
                     HStack{
                         Circle()
-                            .fill(displayHospital.availability ? .blue : .red)
+                            .fill(displayHospital.availability ? .ui.blue : .ui.red)
                             .frame(width: 20)
                         Text(displayHospital.name)
                             .font(.ui.mSemiBold)
-                            .foregroundStyle(.primary)
+                            .foregroundStyle(.ui.textPrimary)
                         
                         Spacer()
                         
                         Image(systemName: "star.fill")
-                            .foregroundStyle(.yellow)
+                            .foregroundStyle(.ui.yellow)
                         
                         Text(String(format: "%.1f", displayHospital.rating))
                             .font(.ui.mRegular)
-                            .foregroundStyle(.primary)
+                            .foregroundStyle(.ui.textPrimary)
                     }
                     
                     // third row
@@ -74,7 +76,7 @@ struct HospitalDetailView: View {
                             .font(.ui.mRegular)
                         Spacer()
                     }
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.ui.textPrimary)
                     
                     // 4th row
                     HStack {
@@ -83,7 +85,7 @@ struct HospitalDetailView: View {
                             .font(.ui.mRegular)
                         Spacer()
                     }
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.ui.textPrimary)
                     
                     // 4th row
                     HStack {
@@ -92,7 +94,7 @@ struct HospitalDetailView: View {
                             .font(.ui.mRegular)
                         Spacer()
                     }
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.ui.textPrimary)
                     
                     // 5th row - Travel times
                     HStack(spacing: 0){
@@ -100,42 +102,40 @@ struct HospitalDetailView: View {
                             ProgressView()
                                 .scaleEffect(0.8)
                                 .padding(.trailing, 8)
+                            
                             Text("Calculating routes...")
                                 .font(.ui.sRegular)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(.ui.textSecondary)
                         } else {
                             if let carArrivalDuration = displayHospital.carArrivalDuration {
-                                Image(systemName: "car")
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                Text(carArrivalDuration)
-                                    .font(.ui.mRegular)
-                                    .padding(.leading, 4)
+                                travelDirectionView(image: "car", value: carArrivalDuration)
                             }
                             
                             if let busArrivalDuration = displayHospital.busArrivalDuration {
-                                Image(systemName: "bus.doubledecker.fill")
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                    .padding(.leading, 8)
-                                Text(busArrivalDuration)
-                                    .font(.ui.mRegular)
-                                    .padding(.leading, 4)
+                                travelDirectionView(image: "bus.doubledecker.fill", value: busArrivalDuration)
                             }
                             
                             if let walkArrivalDuration = displayHospital.walkArrivalDuration {
-                                Image(systemName: "figure.walk")
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                    .padding(.leading, 8)
-                                Text(walkArrivalDuration)
-                                    .font(.ui.mRegular)
-                                    .padding(.leading, 4)
+                                travelDirectionView(image: "figure.walk",
+                                                    value: walkArrivalDuration)
                             }
                         }
                         Spacer()
+                    }// Hstack
+                    .foregroundStyle(.ui.textPrimary)
+                    
+                    Button {
+                        presentedDirectionType = true
+                    } label: {
+                        Text("Get Direction")
+                            .font(.ui.mRegular)
+                            .foregroundStyle(.ui.white)
+                            .frame(height: 36)
+                            .frame(maxWidth: .infinity)
+                            .cornerRadius(16,
+                                          backgroundColor: .ui.red)
                     }
-                    .foregroundStyle(.primary)
+                    .padding(.top, 20)
                 }
                 // Vstack
                 .padding(.horizontal, 12.updateForHeight())
@@ -146,7 +146,7 @@ struct HospitalDetailView: View {
                 maxHeight = size.height
             }
         }// ScrollView
-        .background(.white)
+        .background(.ui.white)
         .cornerRadius(20.updateForHeight(), corners: [.topLeft, .topRight])
         .background(BackgroundClearView())
         .ignoresSafeArea(.all)
@@ -155,6 +155,17 @@ struct HospitalDetailView: View {
             // Fetch travel data when view appears
             await fetchTravelData()
         }
+        .sheet(isPresented: $presentedDirectionType) {
+            GetDirectionModalView { type in
+                transportTypes = type
+            }
+        }.sheet(item: $transportTypes, content: { type in
+            ShareDirectionalToMapModalView(
+                transportTypes: type,
+                destination: hospital.coordinate,
+                destinationName: hospital.name
+            )
+        })
     }
     
     // MARK: - Helper Methods
@@ -168,5 +179,19 @@ struct HospitalDetailView: View {
         // Update the displayed hospital
         updatedHospital = updated
         isFetchingData = false
+    }
+    
+    // MARK: - travel direction view
+    @ViewBuilder
+    private func travelDirectionView(image: String, value: String) -> some View {
+        Image(systemName: image)
+            .resizable()
+            .frame(width: 12, height: 12)
+            .foregroundStyle(.ui.textPrimary)
+        
+        Text(value)
+            .font(.ui.mRegular)
+            .padding(.leading, 4)
+            .foregroundStyle(.ui.textPrimary)
     }
 }

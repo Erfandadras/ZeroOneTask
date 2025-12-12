@@ -23,7 +23,7 @@ struct HospitalListView: View {
     // MARK: - view
     var body: some View {
         VStack(spacing: 0){
-            Color.black.opacity(0.6)
+            Color.ui.black.opacity(0.6)
                 .frame(width: 80, height: 2)
                 .cornerRadius(1)
                 .padding(.vertical, 20)
@@ -49,15 +49,15 @@ struct HospitalListView: View {
                     HStack {
                         Spacer()
                         ProgressView()
-                            .tint(.white)
+                            .foregroundStyle(.ui.white)
                             .padding()
                         Spacer()
                     }
                 } else {
                     if hospitals.isEmpty {
                         Text("No hospitals found in this area")
-                            .font(.subheadline)
-                            .foregroundColor(.white)
+                            .font(.ui.largSemiBold)
+                            .foregroundColor(.ui.white)
                             .padding()
                     } else {
                         ScrollView {
@@ -78,9 +78,9 @@ struct HospitalListView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.bottom, insets.bottom)
-            .background(.gray)
+            .background(.ui.gray)
         }
-        .background(.white)
+        .background(.ui.white)
         .cornerRadius(20, corners: [.topLeft, .topRight])
     }
     
@@ -92,10 +92,10 @@ struct HospitalListView: View {
         Button(action: action) {
             Text(type.title)
                 .font(.ui.mRegular)
-                .foregroundStyle(selected ? .black : .gray)
+                .foregroundStyle(selected ? .ui.black : .ui.gray)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
-                .background(selected ? .gray : .white)
+                .background(selected ? .ui.gray : .ui.white)
                 .cornerRadius(16, corners: [.topLeft, .topRight])
         }
     }
