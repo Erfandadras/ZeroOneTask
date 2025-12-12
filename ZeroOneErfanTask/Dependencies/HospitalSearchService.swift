@@ -141,7 +141,7 @@ final class MockHospitalSearchService: HospitalSearchServiceProtocol {
             throw errorToThrow
         }
         
-        try await Task.sleep(nanoseconds: 500_000_000) // Simulate network delay
+        try await Task.sleep(nanoseconds: 500_000) // Simulate network delay
         return mockHospitals
     }
     
@@ -154,7 +154,7 @@ final class MockHospitalSearchService: HospitalSearchServiceProtocol {
             throw errorToThrow
         }
         
-        try await Task.sleep(nanoseconds: 500_000_000) // Simulate network delay
+        try await Task.sleep(nanoseconds: 500_000) // Simulate network delay
         
         if query.isEmpty {
             return mockHospitals

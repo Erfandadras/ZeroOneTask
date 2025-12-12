@@ -10,11 +10,27 @@
 		E41853D72EEAB80400F66B20 /* BaseModule in Frameworks */ = {isa = PBXBuildFile; productRef = E41853D62EEAB80400F66B20 /* BaseModule */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E41855532EEC48F000F66B20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E490FEE22EEAA607007EE059 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E490FEE92EEAA607007EE059;
+			remoteInfo = ZeroOneErfanTask;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		E418554F2EEC48F000F66B20 /* ZeroOneErfanTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZeroOneErfanTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E490FEEA2EEAA607007EE059 /* ZeroOneErfanTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroOneErfanTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		E41855502EEC48F000F66B20 /* ZeroOneErfanTaskTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ZeroOneErfanTaskTests;
+			sourceTree = "<group>";
+		};
 		E490FEEC2EEAA607007EE059 /* ZeroOneErfanTask */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ZeroOneErfanTask;
@@ -23,6 +39,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E418554C2EEC48F000F66B20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E490FEE72EEAA607007EE059 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -38,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				E490FEEC2EEAA607007EE059 /* ZeroOneErfanTask */,
+				E41855502EEC48F000F66B20 /* ZeroOneErfanTaskTests */,
 				E490FEEB2EEAA607007EE059 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				E490FEEA2EEAA607007EE059 /* ZeroOneErfanTask.app */,
+				E418554F2EEC48F000F66B20 /* ZeroOneErfanTaskTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,6 +78,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E418554E2EEC48F000F66B20 /* ZeroOneErfanTaskTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E41855552EEC48F000F66B20 /* Build configuration list for PBXNativeTarget "ZeroOneErfanTaskTests" */;
+			buildPhases = (
+				E418554B2EEC48F000F66B20 /* Sources */,
+				E418554C2EEC48F000F66B20 /* Frameworks */,
+				E418554D2EEC48F000F66B20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E41855542EEC48F000F66B20 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				E41855502EEC48F000F66B20 /* ZeroOneErfanTaskTests */,
+			);
+			name = ZeroOneErfanTaskTests;
+			packageProductDependencies = (
+			);
+			productName = ZeroOneErfanTaskTests;
+			productReference = E418554F2EEC48F000F66B20 /* ZeroOneErfanTaskTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E490FEE92EEAA607007EE059 /* ZeroOneErfanTask */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E490FEF52EEAA609007EE059 /* Build configuration list for PBXNativeTarget "ZeroOneErfanTask" */;
@@ -86,6 +134,10 @@
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					E418554E2EEC48F000F66B20 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = E490FEE92EEAA607007EE059;
+					};
 					E490FEE92EEAA607007EE059 = {
 						CreatedOnToolsVersion = 26.0.1;
 					};
@@ -109,11 +161,19 @@
 			projectRoot = "";
 			targets = (
 				E490FEE92EEAA607007EE059 /* ZeroOneErfanTask */,
+				E418554E2EEC48F000F66B20 /* ZeroOneErfanTaskTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E418554D2EEC48F000F66B20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E490FEE82EEAA607007EE059 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,6 +184,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E418554B2EEC48F000F66B20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E490FEE62EEAA607007EE059 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,7 +200,59 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E41855542EEC48F000F66B20 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E490FEE92EEAA607007EE059 /* ZeroOneErfanTask */;
+			targetProxy = E41855532EEC48F000F66B20 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		E41855562EEC48F000F66B20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A93LZ79VS9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ios.erfan-dadras-zero-one.com.ZeroOneErfanTaskTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZeroOneErfanTask.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ZeroOneErfanTask";
+			};
+			name = Debug;
+		};
+		E41855572EEC48F000F66B20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A93LZ79VS9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ios.erfan-dadras-zero-one.com.ZeroOneErfanTaskTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZeroOneErfanTask.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ZeroOneErfanTask";
+			};
+			name = Release;
+		};
 		E490FEF32EEAA609007EE059 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -322,6 +441,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E41855552EEC48F000F66B20 /* Build configuration list for PBXNativeTarget "ZeroOneErfanTaskTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E41855562EEC48F000F66B20 /* Debug */,
+				E41855572EEC48F000F66B20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E490FEE52EEAA607007EE059 /* Build configuration list for PBXProject "ZeroOneErfanTask" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
